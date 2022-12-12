@@ -11,13 +11,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDto {
+public class RequestsPageDto {
 
-	private Long id;
+	private List<AppointmentRequestDto> content;
 
-	private String login;
-
-	private String password;
-
-	private List<NamedEntityDto> roles;
+	private Integer totalPages;
 }
