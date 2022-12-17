@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NamedEntityDto {
+public class ServicesPageDto {
 
-	private Long id;
+    private List<ServiceDto> content;
 
-	private String name;
+    private Integer totalPages;
 }

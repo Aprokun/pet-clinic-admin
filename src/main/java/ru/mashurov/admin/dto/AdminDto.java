@@ -13,11 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 public class AdminDto {
 
-	private Long id;
+    private Long id;
 
-	private String login;
+    private String login;
 
-	private String password;
+    private String password;
 
-	private List<NamedEntityDto> roles;
+    private List<NamedEntityDto> roles;
+
+    private NamedEntityDto clinic;
 }

@@ -18,7 +18,7 @@ public class RequestService {
 		return client
 				.get()
 				.uri(uriBuilder -> uriBuilder
-						.path(String.join("/", "api", "admin", adminId.toString(), "appointments").toString())
+						.path(String.join("/", "api", "major", adminId.toString(), "appointments").toString())
 						.queryParam("size", size)
 						.queryParam("page", page)
 						.build()
@@ -26,5 +26,21 @@ public class RequestService {
 				.retrieve()
 				.bodyToMono(RequestsPageDto.class)
 				.block();
+	}
+
+	public void approve(final Long requestId) {
+
+		client
+				.post()
+				.uri(String.join("/", "api", "admin", "requests", requestId.toString(), "approve"))
+				.retrieve();
+	}
+
+	public void reject(final Long requestId) {
+
+		client
+				.post()
+				.uri(String.join("/", "api", "admin", "requests", requestId.toString(), "reject"))
+				.retrieve();
 	}
 }

@@ -9,9 +9,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NamedEntityDto {
+public class ServiceDto {
 
-	private Long id;
+    private Long id;
 
-	private String name;
+    private String name;
+
+    private String description;
+
+    private Integer cost;
 }
