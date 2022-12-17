@@ -3,7 +3,8 @@ package ru.mashurov.admin.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.mashurov.admin.dto.ServicesPageDto;
+import ru.mashurov.admin.dto.ServiceDto;
+import ru.mashurov.admin.dto.page.PageResolver;
 
 @Service
 @AllArgsConstructor
@@ -11,7 +12,7 @@ public class ServiceService {
 
     private final WebClient client;
 
-    public ServicesPageDto findAllByAdminIdWithSizeAndPage(
+    public PageResolver<ServiceDto> findAllByAdminIdWithSizeAndPage(
             final Long clinicId, final Integer page, final Integer size
     ) {
 
@@ -24,7 +25,7 @@ public class ServiceService {
                         .build()
                 )
                 .retrieve()
-                .bodyToMono(ServicesPageDto.class)
+                .bodyToMono(PageResolver.class)
                 .block();
     }
 

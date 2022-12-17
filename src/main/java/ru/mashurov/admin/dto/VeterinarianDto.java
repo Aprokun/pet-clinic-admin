@@ -5,15 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServicesPageDto {
+public class VeterinarianDto {
 
-    private List<ServiceDto> content;
+    private Long id;
 
-    private Integer totalPages;
+    private String surname;
+
+    private String name;
+
+    private String patronymic;
+
+    private Integer experience;
 }

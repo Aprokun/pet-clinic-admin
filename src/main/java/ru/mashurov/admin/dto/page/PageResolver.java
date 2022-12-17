@@ -1,4 +1,4 @@
-package ru.mashurov.admin.dto;
+package ru.mashurov.admin.dto.page;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestsPageDto {
+public class PageResolver<T> {
 
-	private List<AppointmentRequestDto> content;
+    private List<T> content;
 
-	private Integer totalPages;
+    private Integer totalPages;
 }
