@@ -45,8 +45,8 @@ public class SecurityConfiguration {
 		return http
 				.csrf().disable()
 				.authorizeRequests()
-				.antMatchers("/requests", "/veterinarians").hasRole("MAJOR")
-				.antMatchers("/clinics", "/majors", "/requests").hasRole("ADMIN")
+				.antMatchers("/major/**").hasRole("MAJOR")
+				.antMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated()
 				.and()
 				.formLogin()
