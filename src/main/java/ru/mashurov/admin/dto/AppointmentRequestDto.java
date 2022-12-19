@@ -11,13 +11,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AppointmentRequestDto {
 
-	private Long id;
+    private Long id;
 
-	private String veterinarianName;
+    private String veterinarianName;
 
-	private String appointmentPlace;
+    private String appointmentPlace;
 
-	private String petName;
+    private String petName;
 
-	private String serviceName;
+    private String serviceName;
+
+    private String status;
+
+    private String date;
 }
