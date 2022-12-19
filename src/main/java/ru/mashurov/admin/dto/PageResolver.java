@@ -1,4 +1,4 @@
-package ru.mashurov.admin.dto.page;
+package ru.mashurov.admin.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
