@@ -6,13 +6,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.mashurov.admin.dto.AdminDto;
 import ru.mashurov.admin.dto.PageResolver;
+import ru.mashurov.admin.dto.ServiceClinicDto;
+import ru.mashurov.admin.dto.ServiceDto;
 import ru.mashurov.admin.service.AdminService;
 import ru.mashurov.admin.service.ServiceService;
 
@@ -35,29 +38,71 @@ public class MajorServiceController {
             final Model model
     ) {
 
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        final AdminDto admin = adminService.findByUsername(authentication.getName());
+	    final AdminDto admin = adminService.findByUsername(authentication.getName());
 
-        final PageResolver requestsPage
-                = serviceService.findAllByAdminIdWithSizeAndPage(admin.getClinic().getId(), page, size);
+	    final PageResolver<ServiceDto> requestsPage
+			    = serviceService.findAllByAdminIdWithSizeAndPage(admin.getClinic().getId(), page, size);
 
-        model.addAttribute("services", requestsPage.getContent());
-        model.addAttribute("role", authentication.getAuthorities().toArray()[0]);
-        model.addAttribute("pageNumbers", IntStream.range(1, requestsPage.getTotalPages()).toArray());
+	    model.addAttribute("services", requestsPage.getContent());
+	    model.addAttribute("role", authentication.getAuthorities().toArray()[0]);
+	    model.addAttribute("pageNumbers", IntStream.range(0, requestsPage.getTotalPages()).toArray());
 
-        return "major/services";
+	    return "major/services";
     }
 
-    @DeleteMapping("/services/{serviceId}/remove")
-    public String remove(@PathVariable final Long serviceId) {
+	@GetMapping("/services/{id}/remove")
+	public String remove(@PathVariable final Long id) {
 
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		serviceService.deleteById(id);
 
-        final AdminDto admin = adminService.findByUsername(authentication.getName());
+		return "redirect:/major/services";
+	}
 
-        serviceService.removeServiceFromClinic(admin.getClinic().getId(), serviceId);
+	@GetMapping("/services/{id}/update")
+	public String pageUpdate(@PathVariable final Long id, final Model model) {
 
-        return "redirect:/major/services";
-    }
+		final ServiceDto serviceDto = serviceService.findById(id);
+
+		model.addAttribute("serviceDto", serviceDto);
+
+		return "major/service";
+	}
+
+	@PostMapping("/services/{id}/update")
+	public String update(@ModelAttribute final ServiceClinicDto serviceClinicDto) {
+
+		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		final Long clinicId = adminService.findByUsername(authentication.getName()).getClinic().getId();
+
+		serviceClinicDto.setClinicId(clinicId);
+
+		serviceService.update(serviceClinicDto);
+
+		return "redirect:/major/services";
+	}
+
+	@GetMapping("/services/create")
+	public String pageCreate(final Model model) {
+
+		model.addAttribute("serviceDto", new ServiceDto());
+
+		return "/major/service";
+	}
+
+	@PostMapping("/services/create")
+	public String create(@ModelAttribute final ServiceClinicDto serviceClinicDto) {
+
+		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		final Long clinicId = adminService.findByUsername(authentication.getName()).getClinic().getId();
+
+		serviceClinicDto.setClinicId(clinicId);
+
+		serviceService.create(serviceClinicDto);
+
+		return "redirect:/major/services";
+	}
 }
