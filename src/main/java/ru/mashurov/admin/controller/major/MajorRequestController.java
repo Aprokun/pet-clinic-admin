@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.mashurov.admin.controller.CommonController;
 import ru.mashurov.admin.dto.AdminDto;
 import ru.mashurov.admin.dto.AppointmentRequestDto;
 import ru.mashurov.admin.dto.PageResolver;
@@ -26,7 +27,7 @@ import static ru.mashurov.admin.values.AppointmentRequestStatusValues.UNHANDLED;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/major")
-public class MajorRequestController {
+public class MajorRequestController extends CommonController {
 
     private final RequestService requestService;
 
@@ -55,7 +56,7 @@ public class MajorRequestController {
                 = requestService.findAllByStatusAndAdminIdWithSizeAndPage(statuses, admin.getId(), size, page);
 
         model.addAttribute("requests", requestsPage.getContent());
-        model.addAttribute("role", authentication.getAuthorities().toArray()[0]);
+        model.addAttribute("role", getRole());
         model.addAttribute("pageNumbers", IntStream.range(1, requestsPage.getTotalPages()).toArray());
 
         return "major/requests";

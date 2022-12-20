@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.mashurov.admin.controller.CommonController;
 import ru.mashurov.admin.dto.AdminCreateDto;
 import ru.mashurov.admin.dto.AdminDto;
 import ru.mashurov.admin.dto.PageResolver;
@@ -24,7 +25,7 @@ import java.util.stream.IntStream;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/admin")
-public class AdminMajorController {
+public class AdminMajorController extends CommonController {
 
 	private final AdminService adminService;
 
@@ -42,7 +43,7 @@ public class AdminMajorController {
 		final PageResolver<AdminDto> majorsPage = adminService.findAllMajorsWithSizeAndPage(size, page);
 
 		model.addAttribute("majors", majorsPage.getContent());
-		model.addAttribute("role", authentication.getAuthorities().toArray()[0]);
+		model.addAttribute("role", getRole());
 		model.addAttribute("pageNumbers", IntStream.range(1, majorsPage.getTotalPages()).toArray());
 
 		return "admin/majors";
@@ -52,6 +53,7 @@ public class AdminMajorController {
 	public String pageCreate(final Model model) {
 
 		model.addAttribute("adminCreateDto", new AdminCreateDto());
+		model.addAttribute("role", getRole());
 
 		return "admin/major";
 	}
@@ -75,6 +77,7 @@ public class AdminMajorController {
 		);
 
 		model.addAttribute("adminCreateDto", adminCreateDto);
+		model.addAttribute("role", getRole());
 
 		return "admin/major";
 	}

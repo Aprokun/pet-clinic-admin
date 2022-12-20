@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.mashurov.admin.controller.CommonController;
 import ru.mashurov.admin.dto.AdminDto;
 import ru.mashurov.admin.dto.ClinicDto;
 import ru.mashurov.admin.dto.PageResolver;
@@ -27,7 +28,7 @@ import java.util.stream.IntStream;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/admin")
-public class AdminClinicController {
+public class AdminClinicController extends CommonController {
 
     private final AdminService adminService;
 
@@ -50,7 +51,7 @@ public class AdminClinicController {
                 = clinicService.findAllWithSizeAndPageAndRegion(size, page, admin.getClinic().getRegion().getCode());
 
         model.addAttribute("clinics", clinicsPage.getContent());
-        model.addAttribute("role", authentication.getAuthorities().toArray()[0]);
+        model.addAttribute("role", getRole());
         model.addAttribute("pageNumbers", IntStream.range(1, clinicsPage.getTotalPages() + 1).toArray());
 
         return "admin/clinics";
@@ -72,6 +73,7 @@ public class AdminClinicController {
         final List<RegionDto> regions = regionService.findAll();
 
         model.addAttribute("clinicDto", clinicDto);
+        model.addAttribute("role", getRole());
         model.addAttribute("regions", regions);
 
         return "admin/clinic";
@@ -91,6 +93,7 @@ public class AdminClinicController {
         final List<RegionDto> regions = regionService.findAll();
 
         model.addAttribute("clinicDto", new ClinicDto());
+        model.addAttribute("role", getRole());
         model.addAttribute("regions", regions);
 
         return "/admin/clinic";

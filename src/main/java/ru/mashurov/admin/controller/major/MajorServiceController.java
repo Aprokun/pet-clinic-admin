@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.mashurov.admin.controller.CommonController;
 import ru.mashurov.admin.dto.AdminDto;
 import ru.mashurov.admin.dto.PageResolver;
 import ru.mashurov.admin.dto.ServiceClinicDto;
@@ -25,17 +26,17 @@ import java.util.stream.IntStream;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/major")
-public class MajorServiceController {
+public class MajorServiceController extends CommonController {
 
-    private final AdminService adminService;
+	private final AdminService adminService;
 
-    private final ServiceService serviceService;
+	private final ServiceService serviceService;
 
-    @GetMapping("/services")
-    public String services(
-            @RequestParam(defaultValue = "7") final Integer size,
-            @RequestParam(defaultValue = "0") final Integer page,
-            final Model model
+	@GetMapping("/services")
+	public String services(
+			@RequestParam(defaultValue = "7") final Integer size,
+			@RequestParam(defaultValue = "0") final Integer page,
+			final Model model
     ) {
 
 	    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -45,9 +46,9 @@ public class MajorServiceController {
 	    final PageResolver<ServiceDto> requestsPage
 			    = serviceService.findAllByAdminIdWithSizeAndPage(admin.getClinic().getId(), page, size);
 
-	    model.addAttribute("services", requestsPage.getContent());
-	    model.addAttribute("role", authentication.getAuthorities().toArray()[0]);
-	    model.addAttribute("pageNumbers", IntStream.range(0, requestsPage.getTotalPages()).toArray());
+		model.addAttribute("services", requestsPage.getContent());
+		model.addAttribute("role", getRole());
+		model.addAttribute("pageNumbers", IntStream.range(0, requestsPage.getTotalPages()).toArray());
 
 	    return "major/services";
     }
@@ -66,6 +67,7 @@ public class MajorServiceController {
 		final ServiceDto serviceDto = serviceService.findById(id);
 
 		model.addAttribute("serviceDto", serviceDto);
+		model.addAttribute("role", getRole());
 
 		return "major/service";
 	}
@@ -88,6 +90,7 @@ public class MajorServiceController {
 	public String pageCreate(final Model model) {
 
 		model.addAttribute("serviceDto", new ServiceDto());
+		model.addAttribute("role", getRole());
 
 		return "/major/service";
 	}

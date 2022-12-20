@@ -8,9 +8,11 @@
 </head>
 <body>
 
-<th:block th:switch="${role}">
-    <div th:case="'ROLE_ADMIN'" th:replace="topnav_admin :: navbar"></div>
-    <div th:case="'ROLE_MAJOR'" th:replace="topnav_major :: navbar"></div>
+<th:block th:if="${role == 'ROLE_ADMIN'}">
+    <div th:replace="topnav_admin :: navbar"></div>
+</th:block>
+<th:block th:if="${role == 'ROLE_MAJOR'}">
+    <div th:replace="topnav_major :: navbar"></div>
 </th:block>
 
 <form class="w-25 m-auto" th:method="post" th:href="@{|/admin/majors/save/|}" th:object="${veterinarianDto}">

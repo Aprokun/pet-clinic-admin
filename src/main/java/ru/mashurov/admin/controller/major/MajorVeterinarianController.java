@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.mashurov.admin.controller.CommonController;
 import ru.mashurov.admin.dto.AdminDto;
 import ru.mashurov.admin.dto.PageResolver;
 import ru.mashurov.admin.dto.VeterinarianCreateDto;
@@ -25,17 +26,17 @@ import java.util.stream.IntStream;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/major")
-public class MajorVeterinarianController {
+public class MajorVeterinarianController extends CommonController {
 
-    private final AdminService adminService;
+	private final AdminService adminService;
 
-    private final VeterinarianService veterinarianService;
+	private final VeterinarianService veterinarianService;
 
-    @GetMapping("/veterinarians")
-    public String veterinarians(
-            @RequestParam(defaultValue = "7") final Integer size,
-            @RequestParam(defaultValue = "0") final Integer page,
-            final Model model
+	@GetMapping("/veterinarians")
+	public String veterinarians(
+			@RequestParam(defaultValue = "7") final Integer size,
+			@RequestParam(defaultValue = "0") final Integer page,
+			final Model model
     ) {
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -45,9 +46,9 @@ public class MajorVeterinarianController {
 	    final PageResolver<VeterinarianDto> veterinarianPage
 			    = veterinarianService.findAllByClinicId(admin.getClinic().getId(), size, page);
 
-	    model.addAttribute("veterinarians", veterinarianPage.getContent());
-	    model.addAttribute("role", authentication.getAuthorities().toArray()[0]);
-	    model.addAttribute("pageNumbers", IntStream.range(1, veterinarianPage.getTotalPages()).toArray());
+		model.addAttribute("veterinarians", veterinarianPage.getContent());
+		model.addAttribute("role", getRole());
+		model.addAttribute("pageNumbers", IntStream.range(1, veterinarianPage.getTotalPages()).toArray());
 
 	    return "major/veterinarians";
     }
@@ -66,6 +67,7 @@ public class MajorVeterinarianController {
 		final VeterinarianDto veterinarianDto = veterinarianService.findById(id);
 
 		model.addAttribute("veterinarianDto", veterinarianDto);
+		model.addAttribute("role", getRole());
 
 		return "major/veterinarian";
 	}
@@ -82,6 +84,7 @@ public class MajorVeterinarianController {
 	public String pageCreate(final Model model) {
 
 		model.addAttribute("veterinarianDto", new VeterinarianCreateDto());
+		model.addAttribute("role", getRole());
 
 		return "major/veterinarian";
 	}
