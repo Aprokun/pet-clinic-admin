@@ -21,43 +21,43 @@
             <td>Название</td>
             <td>Адрес</td>
             <td></td>
-            <td></td>
         </tr>
         </thead>
         <tbody>
         <tr th:each="clinic : ${clinics}">
-            <td th:text="${clinic.id}"></td>
-            <td th:text="${clinic.name}"></td>
-            <td th:text="${clinic.address}"></td>
+            <td class="align-middle" th:text="${clinic.id}"></td>
+            <td class="align-middle" th:text="${clinic.name}"></td>
+            <td class="align-middle" th:text="${clinic.address}"></td>
             <td>
-                <form th:method="patch" th:action="@{|/admin/clinics/${clinic.id}/change|}">
-                    <button class="btn btn-primary" type="submit">Изменить</button>
+                <form th:method="get" th:action="@{|/admin/clinics/${clinic.id}/update|}">
+                    <button class="btn btn-primary m-1" type="submit">Изменить</button>
                 </form>
-            </td>
-            <td>
-                <form th:method="delete" th:action="@{|/admin/clinics/${clinic.id}/remove|}">
-                    <button class="btn btn-danger" type="submit">Удалить</button>
+                <form th:method="get" th:action="@{|/admin/clinics/${clinic.id}/remove|}">
+                    <button class="btn btn-danger m-1" type="submit">Удалить</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <div class="row" th:fragment="pagination">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <nav aria-label="Pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                        <a class="page-link" th:href="@{|/admin/clinics?page=${pageNumber}&size=7|}"
+                           th:text=${pageNumber}>1</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+    <a class="btn btn-primary" role="button" th:href="@{|/admin/clinics/create|}">Добавить клинику</a>
 </div>
 
-<div class="row" th:fragment="pagination">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <nav aria-label="Pagination">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                    <a class="page-link" th:href="@{|/admin/clinics?page=${pageNumber}&size=7|}"
-                       th:text=${pageNumber}>1</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="col-md-2"></div>
-</div>
 
 <script crossorigin="anonymous"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
