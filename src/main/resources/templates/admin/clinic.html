@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Клиника</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" rel="stylesheet">
+</head>
+<body>
+
+<th:block th:if="${role == 'ROLE_ADMIN'}">
+    <div th:replace="topnav_admin :: navbar"></div>
+</th:block>
+<th:block th:if="${role == 'ROLE_MAJOR'}">
+    <div th:replace="topnav_major :: navbar"></div>
+</th:block>
+
+<form class="w-25 m-auto" th:method="post" th:href="@{|/admin/clinics/save/|}" th:object="${clinicDto}">
+    <div class="form-group">
+        <label for="name">Название</label>
+        <input type="text" class="form-control" id="name" aria-describedby="emailHelp" th:field="*{name}">
+    </div>
+    <div class="form-group">
+        <label for="address">Адрес</label>
+        <input type="text" class="form-control" id="address" th:field="*{address}">
+    </div>
+    <div class="form-group">
+        <label for="region">Регион</label>
+        <select id="region" size="1" class="form-select" th:field="*{region.code}">
+            <option th:each="reg : ${regions}" th:selected="${reg.code == clinicDto.region.code}" th:text="${reg.name}"
+                    th:value="${reg.code}"></option>
+        </select>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Создать</button>
+</form>
+
+<script crossorigin="anonymous"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

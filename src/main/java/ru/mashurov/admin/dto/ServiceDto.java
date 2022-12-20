@@ -5,21 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDto {
+public class ServiceDto {
 
     private Long id;
 
-    private String login;
+    private String name;
 
-    private String password;
+    private String description;
 
-    private List<NamedEntityDto> roles;
-
-    private ClinicDto clinic;
+    private Integer cost;
 }

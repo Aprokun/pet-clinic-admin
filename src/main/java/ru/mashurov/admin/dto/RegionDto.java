@@ -5,21 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDto {
+public class RegionDto {
 
-    private Long id;
+    private Long code;
 
-    private String login;
-
-    private String password;
-
-    private List<NamedEntityDto> roles;
-
-    private ClinicDto clinic;
+    private String name;
 }

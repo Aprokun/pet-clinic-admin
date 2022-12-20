@@ -11,15 +11,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDto {
+public class PageResolver<T> {
 
-    private Long id;
+    private List<T> content;
 
-    private String login;
-
-    private String password;
-
-    private List<NamedEntityDto> roles;
-
-    private ClinicDto clinic;
+    private Integer totalPages;
 }

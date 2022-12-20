@@ -5,21 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDto {
+public class VeterinarianCreateDto {
 
-    private Long id;
+	private String surname;
 
-    private String login;
+	private String name;
 
-    private String password;
+	private String patronymic;
 
-    private List<NamedEntityDto> roles;
+	private Integer experience;
 
-    private ClinicDto clinic;
+	private Long clinicId;
 }
