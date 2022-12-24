@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Настройка расписания</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" rel="stylesheet">
+</head>
+<body>
+
+<th:block th:if="${role == 'ROLE_ADMIN'}">
+    <div th:replace="topnav_admin :: navbar"></div>
+</th:block>
+<th:block th:if="${role == 'ROLE_MAJOR'}">
+    <div th:replace="topnav_major :: navbar"></div>
+</th:block>
+
+<div class="container">
+
+    <div class="m-3 row">
+        <div class="col">
+            <div id="mon_times" class="list-group">
+                <a class="list-group-item list-group-item-action active">Понедельник</a>
+                <a th:if="${timetable.monday}" th:each="period : ${timetable.monday}"
+                   class="list-group-item list-group-item-action" th:text="${period.start} + ' - ' + ${period.end}">Dapibus
+                    ac facilisis in</a>
+                <a th:unless="${timetable.monday}" class="list-group-item list-group-item-action disabled">Нет
+                    расписания</a>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button id="btn_mon" class="btn btn-outline-secondary btn-add-time" type="button">Добавить</button>
+                </div>
+                <input type="time" placeholder="Время начала приёма" class="form-control time-start">
+                <input type="time" placeholder="Время конца приёма" class="form-control time-end">
+            </div>
+        </div>
+        <div class="col">
+            <div id="tue_times" class="list-group">
+                <a class="list-group-item list-group-item-action active">Вторник</a>
+                <th:block th:if="${timetable.tuesday}">
+                    <a th:each="period : ${timetable.tuesday}"
+                       class="list-group-item list-group-item-action" th:text="${period.start} + ' - ' + ${period.end}">Dapibus
+                        ac facilisis in</a>
+                </th:block>
+                <a th:unless="${timetable.tuesday}" class="list-group-item list-group-item-action disabled">Нет
+                    расписания</a>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button id="btn_tue" class="btn-add-time btn btn-outline-secondary" type="button">Добавить</button>
+                </div>
+                <input type="time" placeholder="Время начала приёма" class="form-control time-start">
+                <input type="time" placeholder="Время конца приёма" class="form-control time-end">
+            </div>
+        </div>
+        <div class="col">
+            <div id="wed_times" class="list-group">
+                <a class="list-group-item list-group-item-action active">Среда</a>
+                <th:block th:if="${timetable.wednesday}">
+                    <a th:each="period : ${timetable.wednesday}"
+                       class="list-group-item list-group-item-action" th:text="${period.start} + ' - ' + ${period.end}">Dapibus
+                        ac facilisis in</a>
+                </th:block>
+                <a th:unless="${timetable.wednesday}" class="list-group-item list-group-item-action disabled">Нет
+                    расписания</a>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button id="btn_wed" class="btn-add-time btn btn-outline-secondary" type="button">Добавить</button>
+                </div>
+                <input type="time" placeholder="Время начала приёма" class="form-control time-start">
+                <input type="time" placeholder="Время конца приёма" class="form-control time-end">
+            </div>
+        </div>
+    </div>
+    <div class="m-3 row d-flex justify-content-center">
+        <div class="col">
+            <div id="thu_times" class="list-group">
+                <a class="list-group-item list-group-item-action active">Четверг</a>
+                <th:block th:if="${timetable.thursday}">
+                    <a th:each="period : ${timetable.thursday}"
+                       class="list-group-item list-group-item-action" th:text="${period.start} + ' - ' + ${period.end}">Dapibus
+                        ac facilisis in</a>
+                </th:block>
+                <a th:unless="${timetable.thursday}" class="list-group-item list-group-item-action disabled">Нет
+                    расписания</a>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button id="btn_thu" class="btn-add-time btn btn-outline-secondary" type="button">Добавить</button>
+                </div>
+                <input type="time" placeholder="Время начала приёма" class="form-control time-start">
+                <input type="time" placeholder="Время конца приёма" class="form-control time-end">
+            </div>
+        </div>
+        <div class="col">
+            <div id="fri_times" class="list-group">
+                <a class="list-group-item list-group-item-action active">Пятница</a>
+                <th:block th:if="${timetable.friday}">
+                    <a th:each="period : ${timetable.friday}"
+                       class="list-group-item list-group-item-action" th:text="${period.start} + ' - ' + ${period.end}">Dapibus
+                        ac facilisis in</a>
+                </th:block>
+                <a th:unless="${timetable.friday}" class="list-group-item list-group-item-action disabled">Нет
+                    расписания</a>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button id="btn_fri" class="btn-add-time btn btn-outline-secondary" type="button">Добавить</button>
+                </div>
+                <input type="time" placeholder="Время начала приёма" class="form-control time-start">
+                <input type="time" placeholder="Время конца приёма" class="form-control time-end">
+            </div>
+        </div>
+    </div>
+
+    <a id="table-save-btn" class="btn btn-success d-flex justify-content-center" role="button">Сохранить</a>
+</div>
+
+<input id="vetId" type="hidden" th:value="${vetId}">
+<input id="timetableId" type="hidden" th:value="${timetableId}">
+
+<script crossorigin="anonymous"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/timetable.js}" src="/timetable.js"></script>
+</body>
+</html>
