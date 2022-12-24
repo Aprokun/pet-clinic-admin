@@ -32,6 +32,9 @@
                 <form th:method="get" th:action="@{|/major/veterinarians/${vet.id}/update|}">
                     <button class="btn btn-primary m-1" type="submit">Изменить</button>
                 </form>
+                <form th:method="get" th:action="@{|/major/veterinarians/${vet.id}/change_timetable|}">
+                    <button class="btn btn-primary m-1" type="submit">Настроить расписание</button>
+                </form>
                 <form th:method="get" th:action="@{|/major/veterinarians/${vet.id}/remove|}">
                     <button class="btn btn-danger m-1" type="submit">Удалить</button>
                 </form>
