@@ -39,12 +39,12 @@ public class ServiceService {
 				.retrieve();
 	}
 
-	public void update(final ServiceClinicDto serviceClinicDto) {
+	public void update(final ServiceDto serviceDto) {
 
 		client
 				.patch()
 				.uri(String.join("/", "api", "services", "update"))
-				.body(BodyInserters.fromValue(serviceClinicDto))
+				.body(BodyInserters.fromValue(serviceDto))
 				.retrieve()
 				.toBodilessEntity()
 				.block();

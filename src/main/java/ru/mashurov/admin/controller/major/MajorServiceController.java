@@ -73,13 +73,7 @@ public class MajorServiceController extends CommonController {
 	}
 
 	@PostMapping("/services/{id}/update")
-	public String update(@ModelAttribute final ServiceClinicDto serviceClinicDto) {
-
-		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		final Long clinicId = adminService.findByUsername(authentication.getName()).getClinic().getId();
-
-		serviceClinicDto.setClinicId(clinicId);
+	public String update(@ModelAttribute final ServiceDto serviceClinicDto) {
 
 		serviceService.update(serviceClinicDto);
 
