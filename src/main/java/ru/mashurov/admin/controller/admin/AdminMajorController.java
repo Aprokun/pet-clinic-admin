@@ -44,7 +44,7 @@ public class AdminMajorController extends CommonController {
 
 		model.addAttribute("majors", majorsPage.getContent());
 		model.addAttribute("role", getRole());
-		model.addAttribute("pageNumbers", IntStream.range(1, majorsPage.getTotalPages()).toArray());
+		model.addAttribute("pageNumbers", IntStream.range(0, majorsPage.getTotalPages()).toArray());
 
 		return "admin/majors";
 	}

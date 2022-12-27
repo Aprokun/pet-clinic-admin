@@ -52,7 +52,7 @@ public class AdminClinicController extends CommonController {
 
         model.addAttribute("clinics", clinicsPage.getContent());
         model.addAttribute("role", getRole());
-        model.addAttribute("pageNumbers", IntStream.range(1, clinicsPage.getTotalPages() + 1).toArray());
+        model.addAttribute("pageNumbers", IntStream.range(0, clinicsPage.getTotalPages() + 1).toArray());
 
         return "admin/clinics";
     }

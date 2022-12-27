@@ -48,7 +48,7 @@ public class MajorVeterinarianController extends CommonController {
 
 		model.addAttribute("veterinarians", veterinarianPage.getContent());
 		model.addAttribute("role", getRole());
-		model.addAttribute("pageNumbers", IntStream.range(1, veterinarianPage.getTotalPages()).toArray());
+		model.addAttribute("pageNumbers", IntStream.range(0, veterinarianPage.getTotalPages()).toArray());
 
 	    return "major/veterinarians";
     }

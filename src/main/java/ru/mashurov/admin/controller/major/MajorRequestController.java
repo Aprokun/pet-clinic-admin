@@ -57,7 +57,7 @@ public class MajorRequestController extends CommonController {
 
         model.addAttribute("requests", requestsPage.getContent());
         model.addAttribute("role", getRole());
-        model.addAttribute("pageNumbers", IntStream.range(1, requestsPage.getTotalPages()).toArray());
+        model.addAttribute("pageNumbers", IntStream.range(0, requestsPage.getTotalPages()).toArray());
 
         return "major/requests";
     }
