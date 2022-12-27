@@ -32,6 +32,16 @@ public class RequestService {
 				.block();
 	}
 
+	public AppointmentRequestDto findById(final Long reqId) {
+
+		return client
+				.get()
+				.uri(String.join("/", "api", "requests", reqId.toString()))
+				.retrieve()
+				.bodyToMono(AppointmentRequestDto.class)
+				.block();
+	}
+
 	public void approve(final Long requestId) {
 
 		client
@@ -47,6 +57,36 @@ public class RequestService {
 		client
 				.post()
 				.uri(String.join("/", "api", "major", "requests", requestId.toString(), "reject"))
+				.retrieve()
+				.toBodilessEntity()
+				.block();
+	}
+
+	public PageResolver<AppointmentRequestDto> findTodayAppointmentRequests(
+			final Integer size, final Integer page, final Long adminId
+	) {
+
+		return client
+				.get()
+				.uri(uriBuilder -> uriBuilder
+						.path(String.join("/", "api", "major", adminId.toString(), "today-appointments"))
+						.queryParam("size", size)
+						.queryParam("page", page)
+						.build()
+				)
+				.retrieve()
+				.bodyToMono(PageResolver.class)
+				.block();
+	}
+
+	public void setRequestVisited(final Long reqId, final boolean isVisited) {
+
+		client
+				.patch()
+				.uri(String.join(
+						"/", "api", "major", "requests",
+						reqId.toString(), isVisited ? "visited" : "not_visited"
+				))
 				.retrieve()
 				.toBodilessEntity()
 				.block();
