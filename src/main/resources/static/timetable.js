@@ -67,12 +67,11 @@ function initEvents() {
                 data: JSON.stringify(data),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
-                async: false,
-                success: function (data) {
-                    window.location = '/major/veterinarians/' + data + '/change_timetable'
-                }
+                async: false
             },
         )
+
+        location.reload()
     })
 }
 
